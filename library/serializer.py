@@ -17,7 +17,7 @@ class BookSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 {
                     'status': False,
-                    'message': "Kitob sarlavhasi satr bo'lishi kerek"
+                    'message': "Kitob sarlavhasi satr bo'lishi kerak"
                 }
             )
         if Book.objects.filter(title=title, author=author).exists():
