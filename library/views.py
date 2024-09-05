@@ -26,13 +26,14 @@ class BookListApiView(APIView):
         }
         return Response(data)
 
+
 # class BookDetailApiView(generics.RetrieveAPIView):
 #     queryset = Book.objects.all()
 #     serializer_class = BookSerializer
 
 
 class BookDetailApiView(APIView):
-    def get(self,request, pk):
+    def get(self, request, pk):
         try:
             book = Book.objects.get(id=pk)
             serializer_data = BookSerializer(book).data
@@ -43,7 +44,7 @@ class BookDetailApiView(APIView):
             return Response(data)
         except Exception:
             return Response(
-                {'status':'Does not exits',
+                {'status': 'Does not exits',
                  'message': 'Book is not found'},
                 status=status.HTTP_404_NOT_FOUND
             )
@@ -55,7 +56,7 @@ class BookDetailApiView(APIView):
 
 
 class BookDeleteApiView(APIView):
-    def delete(self,request, pk):
+    def delete(self, request, pk):
         try:
             book = Book.objects.get(id=pk)
             book.delete()
@@ -65,10 +66,9 @@ class BookDeleteApiView(APIView):
             }, status=status.HTTP_200_OK)
         except Exception:
             return Response({
-                 'status': False,
-                 'message': 'Book is not found'
+                'status': False,
+                'message': 'Book is not found'
             }, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 # class BookUpdateApiView(generics.UpdateAPIView):
@@ -77,7 +77,7 @@ class BookDeleteApiView(APIView):
 
 
 class BookUpdateApiView(APIView):
-    def put(self,request, pk):
+    def put(self, request, pk):
         book = get_object_or_404(Book.objects.all(), id=pk)
         data = request.data
         serializer = BookSerializer(instance=book, data=data, partial=True)
@@ -102,7 +102,7 @@ class BookCreateApiView(generics.CreateAPIView):
 
 
 class BookListCreateApiView(APIView):
-    def post(self,request):
+    def post(self, request):
         data = request.data
         serializer = BookSerializer(data=data)
         if serializer.is_valid():
@@ -112,6 +112,7 @@ class BookListCreateApiView(APIView):
                 'books': data
             }
             return Response(data)
+
 
 class BookUpdateDeleteApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
